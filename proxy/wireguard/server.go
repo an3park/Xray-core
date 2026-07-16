@@ -25,8 +25,8 @@ import (
 	"github.com/xtls/xray-core/transport/internet"
 	"github.com/xtls/xray-core/transport/internet/stat"
 	"golang.org/x/crypto/curve25519"
-	"golang.zx2c4.com/wireguard/device"
-	"golang.zx2c4.com/wireguard/tun"
+	"github.com/amnezia-vpn/amneziawg-go/device"
+	"github.com/amnezia-vpn/amneziawg-go/tun"
 	"gvisor.dev/gvisor/pkg/tcpip/stack"
 )
 
@@ -281,6 +281,7 @@ func (s *Server) Start() error {
 	}
 	bind := &bind{
 		listenFunc: listenFunc,
+		awg:        s.conf.Awg != nil,
 	}
 	logger := &device.Logger{
 		Verbosef: func(format string, args ...any) {
@@ -299,6 +300,7 @@ func (s *Server) Start() error {
 	dev := device.NewDevice(s.tun, bind, logger)
 	var cfg strings.Builder
 	cfg.WriteString("private_key=" + s.conf.SecretKey + "\n")
+	appendAwgIPC(&cfg, s.conf.Awg)
 	s.users.Range(func(key, value any) bool {
 		peer := value.(*protocol.MemoryUser).Account.(*MemoryAccount)
 		cfg.WriteString("public_key=" + hex.EncodeToString(peer.Pub[:]) + "\n")

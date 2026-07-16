@@ -12,7 +12,7 @@ import (
 
 	"github.com/xtls/xray-core/common"
 	"github.com/xtls/xray-core/common/errors"
-	"golang.zx2c4.com/wireguard/conn"
+	"github.com/amnezia-vpn/amneziawg-go/conn"
 )
 
 type bind struct {
@@ -20,6 +20,7 @@ type bind struct {
 	listenFunc  func() (net.PacketConn, error)
 	downFunc    func() error
 	reserved    []byte
+	awg         bool
 
 	net.PacketConn
 	closeCh chan struct{}
@@ -63,7 +64,7 @@ func (b *bind) Open(port uint16) (fns []conn.ReceiveFunc, actualPort uint16, err
 					errors.LogErrorInner(context.Background(), err, "bind recv err")
 					continue
 				}
-				if n > 3 {
+				if n > 3 && !b.awg {
 					bufs[0][1] = 0
 					bufs[0][2] = 0
 					bufs[0][3] = 0
