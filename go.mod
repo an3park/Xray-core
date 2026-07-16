@@ -3,6 +3,7 @@ module github.com/xtls/xray-core
 go 1.26
 
 require (
+	github.com/amnezia-vpn/amneziawg-go v0.2.19
 	github.com/apernet/quic-go v0.59.1-0.20260425001925-6c6cc9bcb716
 	github.com/cloudflare/circl v1.6.4
 	github.com/ghodss/yaml v1.0.1-0.20220118164431-d8423dcdf344
@@ -41,7 +42,7 @@ require (
 require (
 	github.com/andybalholm/brotli v1.0.6 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/google/btree v1.1.2 // indirect
+	github.com/google/btree v1.1.3 // indirect
 	github.com/juju/ratelimit v1.0.2 // indirect
 	github.com/klauspost/compress v1.17.4 // indirect
 	github.com/kr/text v0.2.0 // indirect

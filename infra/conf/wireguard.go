@@ -66,6 +66,26 @@ type WireGuardConfig struct {
 	MTU            int32                  `json:"mtu"`
 	Reserved       []byte                 `json:"reserved"`
 	DomainStrategy string                 `json:"domainStrategy"`
+	Awg            *AmneziaParameters     `json:"awg,omitempty"`
+}
+
+type AmneziaParameters struct {
+	Jc   string `json:"jc"`
+	Jmin string `json:"jmin"`
+	Jmax string `json:"jmax"`
+	S1   string `json:"s1"`
+	S2   string `json:"s2"`
+	S3   string `json:"s3"`
+	S4   string `json:"s4"`
+	H1   string `json:"h1"`
+	H2   string `json:"h2"`
+	H3   string `json:"h3"`
+	H4   string `json:"h4"`
+	I1   string `json:"i1"`
+	I2   string `json:"i2"`
+	I3   string `json:"i3"`
+	I4   string `json:"i4"`
+	I5   string `json:"i5"`
 }
 
 func (c *WireGuardConfig) Build() (proto.Message, error) {
@@ -141,6 +161,27 @@ func (c *WireGuardConfig) Build() (proto.Message, error) {
 
 	config.IsClient = c.IsClient
 	config.NoKernelTun = c.NoKernelTun
+
+	if c.Awg != nil {
+		config.Awg = &wireguard.AmneziaParameters{
+			Jc:   c.Awg.Jc,
+			Jmin: c.Awg.Jmin,
+			Jmax: c.Awg.Jmax,
+			S1:   c.Awg.S1,
+			S2:   c.Awg.S2,
+			S3:   c.Awg.S3,
+			S4:   c.Awg.S4,
+			H1:   c.Awg.H1,
+			H2:   c.Awg.H2,
+			H3:   c.Awg.H3,
+			H4:   c.Awg.H4,
+			I1:   c.Awg.I1,
+			I2:   c.Awg.I2,
+			I3:   c.Awg.I3,
+			I4:   c.Awg.I4,
+			I5:   c.Awg.I5,
+		}
+	}
 
 	return config, nil
 }

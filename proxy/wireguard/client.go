@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"golang.zx2c4.com/wireguard/tun"
+	"github.com/amnezia-vpn/amneziawg-go/tun"
 
 	"github.com/xtls/xray-core/common"
 	"github.com/xtls/xray-core/common/buf"
@@ -27,7 +27,7 @@ import (
 	"github.com/xtls/xray-core/features/stats"
 	"github.com/xtls/xray-core/transport"
 	"github.com/xtls/xray-core/transport/internet"
-	"golang.zx2c4.com/wireguard/device"
+	"github.com/amnezia-vpn/amneziawg-go/device"
 )
 
 type Handler struct {
@@ -314,8 +314,10 @@ func (h *Handler) init(ctx context.Context) error {
 	bind.listenFunc = listenFunc
 	bind.downFunc = dev.Down
 	bind.reserved = h.conf.Reserved
+	bind.awg = h.conf.Awg != nil
 	var cfg strings.Builder
 	cfg.WriteString("private_key=" + h.conf.SecretKey + "\n")
+	appendAwgIPC(&cfg, h.conf.Awg)
 	for _, peer := range h.conf.Peers {
 		cfg.WriteString("public_key=" + peer.PublicKey + "\n")
 		if peer.PreSharedKey != "" {

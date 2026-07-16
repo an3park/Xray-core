@@ -20,7 +20,7 @@ import (
 	"time"
 
 	"github.com/xtls/xray-core/transport/internet"
-	"golang.zx2c4.com/wireguard/tun"
+	"github.com/amnezia-vpn/amneziawg-go/tun"
 
 	"golang.org/x/net/dns/dnsmessage"
 	"gvisor.dev/gvisor/pkg/buffer"
