@@ -10,9 +10,9 @@ import (
 	"sync"
 	"syscall"
 
+	"github.com/amnezia-vpn/amneziawg-go/conn"
 	"github.com/xtls/xray-core/common"
 	"github.com/xtls/xray-core/common/errors"
-	"github.com/amnezia-vpn/amneziawg-go/conn"
 )
 
 type bind struct {
